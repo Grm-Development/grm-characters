@@ -1,0 +1,47 @@
+{
+  "identity": {
+    "title": {
+      "normal": "Karakter",
+      "bold": "Oluşturma"
+    },
+    "description": "Karakter detayları.",
+    "firstname": "Ad",
+    "lastname": "Soyad",
+    "gender": {
+      "label": "Cinsiyet",
+      "m": "Erkek",
+      "f": "Kadın"
+    },
+    "dateOfBirth": "Doğum Tarihi",
+    "cancel": "İptal",
+    "confirm": "Onayla",
+    "creating": "Oluşturuluyor..."
+  },
+  "multicharacter": {
+    "title": {
+      "normal": "Karakter",
+      "bold": "Seçim"
+    },
+    "description": "Oynamak istediğin karakteri seç.",
+    "slots": {
+      "created": {
+        "at": "Oluşturulma tarihi",
+        "play": "Oyna"
+      },
+      "available": {
+        "content": {
+          "first": "Yeni",
+          "second": "Karakter Oluştur"
+        },
+        "create": "Oluştur"
+      },
+      "blocked": {
+        "content": {
+          "first": "Karakter",
+          "second": "Engellendi"
+        },
+        "buy": "Satın Al"
+      }
+    }
+  }
+}

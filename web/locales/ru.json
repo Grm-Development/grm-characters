@@ -1,0 +1,47 @@
+{
+  "identity": {
+    "title": {
+      "normal": "Персонаж",
+      "bold": "Создание"
+    },
+    "description": "Детали персонажа.",
+    "firstname": "Имя",
+    "lastname": "Фамилия",
+    "gender": {
+      "label": "Пол",
+      "m": "Мужской",
+      "f": "Женский"
+    },
+    "dateOfBirth": "Дата рождения",
+    "cancel": "Отменить",
+    "confirm": "Подтвердить",
+    "creating": "Создание..."
+  },
+  "multicharacter": {
+    "title": {
+      "normal": "Персонаж",
+      "bold": "Выбор"
+    },
+    "description": "Выберите персонажа, за которого хотите играть.",
+    "slots": {
+      "created": {
+        "at": "Создан",
+        "play": "Играть"
+      },
+      "available": {
+        "content": {
+          "first": "Создать",
+          "second": "нового персонажа"
+        },
+        "create": "Создать"
+      },
+      "blocked": {
+        "content": {
+          "first": "Персонаж",
+          "second": "Заблокирован"
+        },
+        "buy": "Купить"
+      }
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "identity": {
+    "title": {
+      "normal": "Postać",
+      "bold": "Tworzenie"
+    },
+    "description": "Szczegóły postaci.",
+    "firstname": "Imię",
+    "lastname": "Nazwisko",
+    "gender": {
+      "label": "Płeć",
+      "m": "Mężczyzna",
+      "f": "Kobieta"
+    },
+    "dateOfBirth": "Data urodzenia",
+    "cancel": "Anuluj",
+    "confirm": "Zatwierdź",
+    "creating": "Tworzenie..."
+  },
+  "multicharacter": {
+    "title": {
+      "normal": "Postać",
+      "bold": "Wybór"
+    },
+    "description": "Wybierz postać, którą chcesz grać.",
+    "slots": {
+      "created": {
+        "at": "Utworzono",
+        "play": "Graj"
+      },
+      "available": {
+        "content": {
+          "first": "Stwórz nową",
+          "second": "Postać"
+        },
+        "create": "Stwórz"
+      },
+      "blocked": {
+        "content": {
+          "first": "Postać",
+          "second": "Zablokowana"
+        },
+        "buy": "Kup"
+      }
+    }
+  }
+}

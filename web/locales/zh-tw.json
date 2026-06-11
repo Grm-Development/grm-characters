@@ -1,0 +1,47 @@
+{
+  "identity": {
+    "title": {
+      "normal": "角色",
+      "bold": "建立"
+    },
+    "description": "角色詳細資訊。",
+    "firstname": "名字",
+    "lastname": "姓氏",
+    "gender": {
+      "label": "性別",
+      "m": "男性",
+      "f": "女性"
+    },
+    "dateOfBirth": "出生日期",
+    "cancel": "取消",
+    "confirm": "確認",
+    "creating": "建立中..."
+  },
+  "multicharacter": {
+    "title": {
+      "normal": "角色",
+      "bold": "選擇"
+    },
+    "description": "選擇你想使用的角色。",
+    "slots": {
+      "created": {
+        "at": "建立於",
+        "play": "開始遊戲"
+      },
+      "available": {
+        "content": {
+          "first": "建立",
+          "second": "新角色"
+        },
+        "create": "建立"
+      },
+      "blocked": {
+        "content": {
+          "first": "角色",
+          "second": "已封鎖"
+        },
+        "buy": "購買"
+      }
+    }
+  }
+}

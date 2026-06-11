@@ -1,0 +1,47 @@
+{
+  "identity": {
+    "title": {
+      "normal": "Personaggio",
+      "bold": "Creazione"
+    },
+    "description": "Dettagli personaggio.",
+    "firstname": "Nome",
+    "lastname": "Cognome",
+    "gender": {
+      "label": "Sesso",
+      "m": "Maschio",
+      "f": "Femmina"
+    },
+    "dateOfBirth": "Data di Nascita",
+    "cancel": "Annulla",
+    "confirm": "Conferma",
+    "creating": "Creazione in corso..."
+  },
+  "multicharacter": {
+    "title": {
+      "normal": "Personaggio",
+      "bold": "Scelta"
+    },
+    "description": "Seleziona il personaggio con cui giocare.",
+    "slots": {
+      "created": {
+        "at": "Creato il",
+        "play": "Gioca"
+      },
+      "available": {
+        "content": {
+          "first": "Crea nuovo",
+          "second": "Personaggio"
+        },
+        "create": "Crea"
+      },
+      "blocked": {
+        "content": {
+          "first": "Personaggio",
+          "second": "Bloccato"
+        },
+        "buy": "Acquista"
+      }
+    }
+  }
+}

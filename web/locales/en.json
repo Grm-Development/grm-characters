@@ -1,0 +1,47 @@
+{
+  "identity": {
+    "title": {
+      "normal": "Creation",
+      "bold": "Identity"
+    },
+    "description": "Your character details.",
+    "firstname": "Firstname",
+    "lastname": "Lastname",
+    "gender": {
+      "label": "Gender",
+      "m": "Male",
+      "f": "Female"
+    },
+    "dateOfBirth": "Date of Birth",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "creating": "Creating..."
+  },
+  "multicharacter": {
+    "title": {
+      "normal": "Selector",
+      "bold": "Character"
+    },
+    "description": "Select your main character.",
+    "slots": {
+      "created": {
+        "at": "Created in",
+        "play": "Play"
+      },
+      "available": {
+        "content": {
+          "first": "Create new",
+          "second": "Character"
+        },
+        "create": "Create"
+      },
+      "blocked": {
+        "content": {
+          "first": "Blocked",
+          "second": "Character"
+        },
+        "buy": "Buy"
+      }
+    }
+  }
+}
