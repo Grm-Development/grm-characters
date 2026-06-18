@@ -30,7 +30,7 @@ register_nui_callback("identity:setCamera", function(data)
 end)
 
 register_nui_callback("identity:createCharacter", function(data) 
-    TriggerServerEvent("grm-characters:login", bridge.generateCharId(main.characters, main.availableSlots), bridge.formatIdentity(data))
+    TriggerServerEvent("grm-characters:login", bridge.generateCharId(main.characters, main.availableSlots), data)
 end)
 
 register_nui_callback("multicharacter:loadCharacter", function(data) 
