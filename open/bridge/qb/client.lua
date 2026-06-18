@@ -31,17 +31,6 @@ function bridge.notify(message, notifyType)
     QBCore.Functions.Notify(message, notifyType, 5000)
 end
 
----@param data table
----@return table
-function bridge.formatIdentity(data)
-    return { 
-        lastname = data.lastname, 
-        firstname = data.firstname, 
-        gender = data.gender, 
-        birthdate = data.dob
-    }
-end
-
 ---@param characters table
 ---@param limit number
 function bridge.generateCharId(characters, limit)
