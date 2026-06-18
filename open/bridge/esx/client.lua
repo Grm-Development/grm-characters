@@ -28,17 +28,6 @@ function bridge.notify(message, notifyType)
     ESX.ShowNotification(message, notifyType, 5000)
 end
 
----@param data table
----@return table
-function bridge.formatIdentity(data)
-    return { 
-        lastname = identity.lastname, 
-        firstname = identity.firstname, 
-        sex = identity.gender, 
-        dateofbirth = identity.dob 
-    }
-end
-
 ---@param characters table
 ---@param limit number
 function bridge.generateCharId(characters, limit)
