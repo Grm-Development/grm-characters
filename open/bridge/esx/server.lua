@@ -17,13 +17,19 @@ function bridge.playerLogout(source)
     TriggerEvent("esx:playerLogout", source)
 end
 
+---@param data table
+---@return table
+local function format_identity(data)
+    return data and { lastname = data.lastname, firstname = data.firstname, sex = data.gender, dateofbirth = data.dob }
+end
+
 ---@param source number|string
 ---@param identifier string
 ---@param identity table
 ---@return boolean
 function bridge.playerLogin(source, identifier, identity)
     local id = not identity and identifier:match("^(.-):") or ("char" .. identifier)
-    TriggerEvent("esx:onPlayerJoined", source, id, identity)
+    TriggerEvent("esx:onPlayerJoined", source, id, format_identity(identity))
 end
 
 ---@param license string
