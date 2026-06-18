@@ -24,6 +24,12 @@ function bridge.playerLogout(source)
     QBCore.Player.Logout(source)
 end
 
+---@param data table
+---@return table
+local function format_identity(data)
+    return { lastname = data.lastname, firstname = data.firstname, gender = data.gender, birthdate = data.dob }
+end
+
 ---@param source number|string
 ---@param identifier string
 ---@param identiy table|nil
@@ -33,7 +39,7 @@ function bridge.playerLogin(source, identifier, identity)
     -- identifier: (charId for registration / citizenid for login)
     
     if identity then
-        success = QBCore.Player.Login(source, false, { cid = identifier, charinfo = identity })
+        success = QBCore.Player.Login(source, false, { cid = identifier, charinfo = format_identity(identity) })
     else
         success = QBCore.Player.Login(source, identifier)
     end
