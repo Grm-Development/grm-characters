@@ -263,10 +263,6 @@ end
 function start_character_selection()
     local fetch = lib.callback.await("grm-characters:fetch", false) 
     local state = (#fetch.characters == 0) and "identity" or "multicharacter"
-
-    main.availableSlots = fetch.availableSlots 
-    main.characters = fetch.characters 
-    
     utils.setCurrentActivity(grm_locale(("activity_%s"):format(state)))
 
     create_camera(state, true)
@@ -281,9 +277,14 @@ function start_character_selection()
     ShutdownLoadingScreen()
     DoScreenFadeIn(1300)
     
-    fetch.availableSlots = (fetch.availableSlots - #fetch.characters) or 0
+    main.availableSlots = fetch.availableSlots 
+    main.characters = fetch.characters 
 
-    sync_configuration(state, fetch)
+    sync_configuration(state, {
+        availableSlots = (fetch.availableSlots - #fetch.characters),
+        characters = fetch.characters
+    })
+   
     set_nui_state(state, true)
 end
 
