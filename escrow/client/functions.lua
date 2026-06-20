@@ -280,7 +280,8 @@ function start_character_selection()
     
     main.characters = fetch.characters 
     main.availableSlots = (fetch.availableSlots - #fetch.characters) or 0
-
+    fetch.availableSlots = main.availableSlots
+   
     sync_configuration(state, fetch)
     set_nui_state(state, true)
 end
