@@ -3,7 +3,7 @@ game 'gta5'
 lua54 'yes'
 
 author 'Grm Development'
-version '1.0.3'
+version '1.0.4'
 description 'Grm Characters System'
 
 shared_scripts {'@ox_lib/init.lua','init.lua'}
