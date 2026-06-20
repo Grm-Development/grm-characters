@@ -17,10 +17,6 @@ function sync_configuration(target, data)
     send_react_message("syncConfiguration", { [target] = data })
 end
 
-function is_freemode_model(model)
-    return model == `mp_m_freemode_01` or model == `mp_f_freemode_01`
-end
-
 function set_nui_focus(state)
     SetNuiFocus(state, state)
     SetNuiFocusKeepInput(false)
@@ -47,9 +43,9 @@ function set_weather_type(weather)
     SetWeatherTypeNowPersist(weather)
 end
 
-function set_owned_skin(appearance, gender)
+function set_owned_skin(appearance)
     utils.asyncFadeOutEntity(cache.ped)
-    set_ped_appearance(table.type(appearance) == "empty" and skins.fallback.appearance[gender] or appearance)
+    set_ped_appearance(appearance)
     utils.asyncFadeInEntity(cache.ped, 1)
 end
 
@@ -104,11 +100,6 @@ end
 function set_ped_appearance(appearance)
     utils.setPlayerAppearance(appearance)
     cache.ped = PlayerPedId()
-
-    if not is_freemode_model(GetEntityModel(cache.ped)) then return end
-
-    SetPedDefaultComponentVariation(cache.ped)
-    SetPedHeadBlendData(cache.ped, 0, 0, 0, 0, 0, 0, 0, 0, 0, false)
 end
 
 function create_camera(typo, active, fov)
