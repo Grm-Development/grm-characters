@@ -1,5 +1,8 @@
 
-assert(GetResourceState("esx_multicharcater") == "missing", "esx_multicharacter can broke this resource, please remove.")
+assert(
+    GetResourceState("esx_multicharcater") == "missing", 
+    "esx_multicharacter can broke this resource, please remove."
+)
 
 local ESX = exports.es_extended:getSharedObject()
 
@@ -13,8 +16,8 @@ RegisterEvent("esx:onPlayerLogout", function()
     player_logout_init() -- internal function
 end)
 
-RegisterEvent("esx:playerLoaded", function(data, new, skin)
-    player_loaded_init({ name = data.name, coords = data.coords, new = new })
+RegisterEvent("esx:playerLoaded", function(data, isNew, skin)
+    player_loaded_init({ gender = data.gender, name = data.name, coords = data.coords, new = isNew })
 end)
 
 --------------------------------------------------------------------------------------
