@@ -1,15 +1,17 @@
 
-assert(GetResourceState("esx_multicharcater") == "missing", "esx_multicharacter can broke this resource, please remove.")
+assert(
+    GetResourceState("esx_multicharcater") == "missing", 
+    "esx_multicharacter can broke this resource, please remove."
+)
 
 local ESX = exports.es_extended:getSharedObject()
 
-require '@oxmysql.lib.MySQl' 
+require '@oxmysql.lib.MySQL' 
 
----@param source number
----@return string
-function bridge.getIdentifier(source)
-    return ESX.GetIdentifier(source)
-end
+local FETCH_USER_CHARACTERS = [[
+    SELECT `disabled`, `identifier`, `skin`, DATE_FORMAT(created, '%d/%m/%Y') AS createdAt, `firstname`, `lastname`, `sex` AS gender 
+    FROM `users` WHERE `identifier` LIKE ? LIMIT ?
+]]
 
 ---@param source number|string
 ---@return boolean
@@ -32,26 +34,11 @@ function bridge.playerLogin(source, identifier, identity)
     TriggerEvent("esx:onPlayerJoined", source, id, format_identity(identity))
 end
 
----@param license string
+---@param source number
 ---@param limit number
 ---@return table
-function bridge.getUserCharacters(license, limit)
-    local query = [[
-        SELECT 
-            `disabled`, 
-            `identifier`, 
-            `skin`, 
-            DATE_FORMAT(created, '%d/%m/%Y') AS createdAt, 
-            `firstname`, 
-            `lastname`, 
-            `sex` AS gender 
-        FROM 
-            `users` 
-        WHERE 
-            `identifier` LIKE ?
-        LIMIT ?
-    ]]
-    return MySQL.query.await(query, { "char%:" .. license, limit })
+function bridge.getUserCharacters(source, limit)
+    return MySQL.query.await(FETCH_USER_CHARACTERS, { "char%:" .. ESX.GetIdentifier(source), limit })
 end
 
 --------------------------------------------------------------------------------------------------------------------------
