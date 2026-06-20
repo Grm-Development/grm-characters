@@ -70,12 +70,12 @@ end)
 lib.callback.register(
     "grm-characters:fetch", 
     function(source)
-        local license = ESX.GetIdentifier(source)
+        local license = GetPlayerIdentifierByType(source, "license")
 
         if license then
             local slots = get_player_slots(license)
-            local chars = MySQL.query.await(query, { "grm%:" .. license, slots })
-            
+            local chars = bridge.getUserCharacters(source, slots) or {}
+
             return { 
                 availableSlots = slots, 
                 characters = not chars and {} or lib.array.map(chars, function(char)
@@ -83,7 +83,7 @@ lib.callback.register(
                         disabled = char.disabled,
                         identifier = char.identifier,
                         status = "created",
-                        skin = utils.getAppearance(char.identifier) or json.decode(char.skin or "[]") or {},
+                        skin = utils.getAppearance(char.identifier) or json.decode(char.skin or "[]"),
                         createdAt = char.createdAt,
                         firstname = char.firstname,
                         lastname = char.lastname,
