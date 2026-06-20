@@ -77,8 +77,8 @@ lib.callback.register(
             local chars = MySQL.query.await(query, { "grm%:" .. license, slots })
             
             return { 
-                slots = slots, 
-                chars = not chars and {} or lib.array.map(chars, function(char)
+                availableSlots = slots, 
+                characters = not chars and {} or lib.array.map(chars, function(char)
                     return {
                         disabled = char.disabled,
                         identifier = char.identifier,
