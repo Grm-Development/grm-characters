@@ -83,7 +83,7 @@ lib.callback.register(
                         disabled = char.disabled,
                         identifier = char.identifier,
                         status = "created",
-                        skin = grm.appearance.get(char.identifier),
+                        skin = utils.getAppearance(char.identifier) or json.decode(char.skin or "[]") or {},
                         createdAt = char.createdAt,
                         firstname = char.firstname,
                         lastname = char.lastname,
