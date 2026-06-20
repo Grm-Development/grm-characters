@@ -263,6 +263,9 @@ end
 function start_character_selection()
     local fetch = lib.callback.await("grm-characters:fetch", false) 
     local state = (#fetch.characters == 0) and "identity" or "multicharacter"
+
+    main.availableSlots = fetch.availableSlots 
+    main.characters = fetch.characters 
     
     utils.setCurrentActivity(grm_locale(("activity_%s"):format(state)))
 
@@ -278,10 +281,8 @@ function start_character_selection()
     ShutdownLoadingScreen()
     DoScreenFadeIn(1300)
     
-    main.characters = fetch.characters 
-    main.availableSlots = (fetch.availableSlots - #fetch.characters) or 0
-    fetch.availableSlots = main.availableSlots
-   
+    fetch.availableSlots = (fetch.availableSlots - #fetch.characters) or 0
+
     sync_configuration(state, fetch)
     set_nui_state(state, true)
 end
