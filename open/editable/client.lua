@@ -37,7 +37,7 @@ end
 
 ---@return void
 function utils.openCustomIdentity()
-    return print("openCustomIdentity") -- put here the event of your custom identity
+    return grm_debug("openCustomIdentity") -- put here the event of your custom identity
 end
 
 ---@param apperance table
@@ -59,32 +59,30 @@ function utils.setPlayerAppearance(appearance)
 end
 
 ---@return void
-function utils.openPersonalizationMenu()
+function utils.openPersonalizationMenu(gender)
     local p = promise.new()
-    local c = {
-        ped = false,
-        headBlend = true,
-        faceFeatures = true,
-        headOverlays = true,
-        enableExit = false,
-        components = true,
-        props = true,
-        tattoos = true
-    }
+
     if config.appearance == "fivem-appearance" then 
         exports['fivem-appearance']:startPlayerCustomization(function(appearance)
-            if appearance then 
+            if (appearance) then 
                 TriggerServerEvent("fivem-appearance:save", appearance)
             end
             p:resolve()
-        end, c)
+        end, {
+            ped = false,
+            headBlend = true,
+            faceFeatures = true,
+            headOverlays = true,
+            enableExit = false,
+            components = true,
+            props = true,
+            tattoos = true
+        })
     elseif config.appearance == "illenium-appearance" then 
-        exports['illenium-appearance']:startPlayerCustomization(function(appearance)
-            if appearance then
-                TriggerServerEvent("illenium-appearance:server:saveAppearance", appearance)
-            end
+        exports['illenium-appearance']:createCharacter(gender, function()
+            -- modified illenium appearance, check our docs/Discord
             p:resolve()
-        end, c)
+        end)
     elseif config.appearance == "bl_appearance" then 
         exports.bl_appearance:InitialCreation(function()
             p:resolve()
