@@ -67,20 +67,30 @@ RegisterServerEvent("grm-characters:login", function(identifier, identity)
     Player(playerId).state:set("grm_characters_loaded", true, true)
 end)
 
-lib.callback.register("grm-characters:fetch", function(source)
-    local license = GetPlayerIdentifierByType(source, 'license')
-    
-    if not license then 
-        return DropPlayer(source, grm_locale("cant_find_identifier")) 
-    end
+lib.callback.register(
+    "grm-characters:fetch", 
+    function(source)
+        local license = ESX.GetIdentifier(source)
 
-    local slots = get_player_slots(license)
-    local chars = bridge.getUserCharacters(source, slots) or {}
-
-    for k, v in pairs(chars) do
-        chars[k].skin = utils.getAppearance(v.identifier) or json.decode(v.skin or "[]") or {}
-        chars[k].status = "created"
+        if license then
+            local slots = get_player_slots(license)
+            local chars = MySQL.query.await(query, { "grm%:" .. license, slots })
+            
+            return { 
+                slots = slots, 
+                chars = not chars and {} or lib.array.map(chars, function(char)
+                    return {
+                        disabled = char.disabled,
+                        identifier = char.identifier,
+                        status = "created",
+                        skin = grm.appearance.get(char.identifier),
+                        createdAt = char.createdAt,
+                        firstname = char.firstname,
+                        lastname = char.lastname,
+                        gender = char.sex
+                    }
+                end) 
+            }
+        end
     end
-    
-    return { characters = chars, availableSlots = slots }
-end)
+)
