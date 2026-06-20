@@ -1,6 +1,13 @@
 
-assert(GetResourceState("qb-multicharacter") == "missing", "qb-multicharacter can broke this resource, please remove.")
-assert(GetResourceState("qb-loading") == "missing", "qb-loading can broke this resource, please remove.")
+assert(
+    GetResourceState("qb-multicharacter") == "missing", 
+    "qb-multicharacter can broke this resource, please remove."
+)
+
+assert(
+    GetResourceState("qb-loading") == "missing",
+    "qb-loading can broke this resource, please remove."
+)
 
 local QBCore = exports['qb-core']:GetCoreObject()
 
@@ -14,8 +21,12 @@ end)
 
 RegisterNetEvent("grm-characters_qb:spawn", function(isNew)
     local data = QBCore.Functions.GetPlayerData()
-    local name = ("%s %s"):format(data.charinfo.firstname, data.charinfo.lastname)
-    player_loaded_init({ name = name, coords = data.position, new = isNew })
+    player_loaded_init({ 
+        name = ("%s %s"):format(data.charinfo.firstname, data.charinfo.lastname), 
+        coords = data.position, 
+        new = isNew, 
+        gender = data.charinfo.gender 
+    })
     TriggerServerEvent('QBCore:Server:OnPlayerLoaded')
     TriggerEvent('QBCore:Client:OnPlayerLoaded')
 end)
