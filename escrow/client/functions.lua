@@ -1,4 +1,4 @@
--- Last update (21.11.2025)
+-- Last update (20.06.2026)
 
 local scenarios = require 'open.config.multicharacter.scenarios'
 local skins = require 'open.config.multicharacter.skins'
@@ -31,9 +31,9 @@ function set_nui_state(target, state)
     send_react_message("setVisible", { target = target, status = state })
 end
 
-function open_personalization_menu()
+function open_personalization_menu(gender)
     utils.setCurrentActivity(grm_locale("activity_skinmenu")) 
-    utils.openPersonalizationMenu()
+    utils.openPersonalizationMenu(gender)
 end
 
 function play_scenario(scenario)
@@ -162,11 +162,45 @@ function delete_scenario_props(prop)
     grm_debug(("deleting scenario obj `%s`"):format(obj))
 end
 
+---If you doesn't want use our spawn system, you can use your
+---Delete the stage, cams and nui focus with this
+function player_spawn_init(data)
+    set_nui_focus(false)
+    DestroyAllCams(true)
+    RenderScriptCams(false, false, 0, false, false)
+    ClearPedTasksImmediately(cache.ped)
+    delete_scenario_props()
+
+    TriggerServerEvent("grm-characters:session", false)
+    grm_debug("session switch (private => public)")
+    ClearTimecycleModifier()
+    stage_delete_all()
+
+    main.override = false 
+    Wait(1000)
+
+    FreezeEntityPosition(cache.ped, false)
+    SetPlayerControl(cache.playerId, true, 0)
+    SetPlayerInvincible(cache.playerId, false)
+
+    main.stage.cams = {}
+    main.characters = nil
+    main.availableSlots = nil
+    main.relog = true
+    
+    utils.setCurrentActivity(grm_locale("activity_playing", data.name))
+end
+
 function player_loaded_init(data)
     set_nui_focus(false)
     stage_set_alpha(255)
-    
-    if data.new then open_personalization_menu() end
+
+    ClearPedTasksImmediately(cache.ped)
+    delete_scenario_props()
+
+    if data.new then 
+        open_personalization_menu(data.gender) 
+    end
 
     utils.setCurrentActivity(grm_locale("activity_spawning"))
 
@@ -181,8 +215,6 @@ function player_loaded_init(data)
         switch_to_part("first")
     end
     
-    ClearPedTasksImmediately(cache.ped)
-    delete_scenario_props()
     set_player_coords(data.coords)
     TriggerServerEvent("grm-characters:session", false)
     grm_debug("session switch (private => public)")
