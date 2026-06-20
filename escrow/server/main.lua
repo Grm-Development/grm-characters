@@ -1,4 +1,4 @@
--- Last update (21.11.2025)
+-- Last update (20.06.2026)
 
 local uno <const> = require 'open.config.multicharacter.settings'
 local due <const> = require 'open.config.loadscreen.settings'
@@ -68,14 +68,14 @@ RegisterServerEvent("grm-characters:login", function(identifier, identity)
 end)
 
 lib.callback.register("grm-characters:fetch", function(source)
-    local license = bridge.getIdentifier(source)
+    local license = GetPlayerIdentifierByType(source, 'license')
     
     if not license then 
         return DropPlayer(source, grm_locale("cant_find_identifier")) 
     end
 
     local slots = get_player_slots(license)
-    local chars = bridge.getUserCharacters(license, slots) or {}
+    local chars = bridge.getUserCharacters(source, slots) or {}
 
     for k, v in pairs(chars) do
         chars[k].skin = utils.getAppearance(v.identifier) or json.decode(v.skin or "[]") or {}
