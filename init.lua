@@ -32,7 +32,7 @@ grm_debug(("started with `%s` locales"):format(language))
 
 local resources = {
     ['appearance'] = {'esx_skin','fivem-appearance','bl_appearance','illenium-appearance'},
-    ['frameworks'] = {['es_extended'] = 'esx',['qb_core'] = 'qb',['qb-core'] = 'qb',['qbx-core'] = 'qbx',['qbx_core'] = 'qbx'}
+    ['frameworks'] = {['es_extended'] = 'esx',['qbx_core'] = 'qbx',['qbx-core'] = 'qbx',['qb_core'] = 'qb',['qb-core'] = 'qb'}
 }
 
 local function findStartedResource(list, returnKey)
