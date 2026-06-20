@@ -1,21 +1,33 @@
 
-assert(GetResourceState("qb-multicharacter") == "missing", "qb-multicharacter can broke this resource, please remove.")
-assert(GetResourceState("qb-loading") == "missing", "qb-loading can broke this resource, please remove.")
+assert(
+    GetResourceState("qb-multicharacter") == "missing", 
+    "qb-multicharacter can broke this resource, please remove."
+)
+
+assert(
+    GetResourceState("qb-loading") == "missing",
+    "qb-loading can broke this resource, please remove."
+)
 
 local QBCore = exports['qb-core']:GetCoreObject()
 
-require '@oxmysql.lib.MySQl' 
+require '@oxmysql.lib.MySQL' 
+
+local FETCH_USER_CHARACTERS = [[
+    SELECT `disabled`, `citizenid`, `cid`, DATE_FORMAT(created, '%d/%m/%Y') AS createdAt, `charinfo` FROM `players` WHERE `license` = ? LIMIT ?
+]]
+
+---Sync our player loaded status with the framework one
+---@param source number
+AddEventHandler("QBCore:Server:OnPlayerUnload", function(source)
+    Player(source).state:set("grm_characters_loaded", false, true)
+    Player(source).state:set("grm_characters_relog", false, true)
+end)
 
 ---@param cid number
 ---@return table|nil
 function bridge.getPlayerSkin(cid)
     return MySQL.query.await("SELECT * FROM playerskins WHERE citizenid = ? AND active = ?", { cid, 1 })
-end
-
----@param source number
----@return string
-function bridge.getIdentifier(source)
-    return QBCore.Functions.GetIdentifier(source, 'license')
 end
 
 ---@param source number|string
@@ -49,25 +61,15 @@ function bridge.playerLogin(source, identifier, identity)
     TriggerClientEvent("grm-characters_qb:spawn", source, identity ~= nil)
 end
 
----@param license string
+---@param source number
 ---@param limit number
 ---@return table
-function bridge.getUserCharacters(license, limit)
-    local query = [[
-        SELECT 
-            `disabled`, 
-            `citizenid`, 
-            `cid`, 
-            DATE_FORMAT(created, '%d/%m/%Y') AS createdAt, 
-            `charinfo`
-        FROM  
-            `players` 
-        WHERE 
-            `license` = ?
-        LIMIT ?
-    ]]
+function bridge.getUserCharacters(source, limit)
     return lib.array.map(
-        MySQL.query.await(query, { license, limit }), 
+        MySQL.query.await(FETCH_USER_CHARACTERS, { 
+            QBCore.Functions.GetIdentifier(source, 'license'), 
+            limit 
+        }), 
         function(element, index)
             local charinfo = json.decode(element.charinfo)
 
