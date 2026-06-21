@@ -50,7 +50,7 @@ register_nui_callback('multicharacter:loadSkin', function(data)
     
     data.gender = data.gender or "m"
 
-    if table.type(data.skin) == "empty" then data.skin = file.skins.fallback.appearance[gender] end
+    if table.type(data.skin) == "empty" then data.skin = get_fallback_skin(gender) end
     
     set_owned_skin(data.skin, data.gender)
 
