@@ -15,7 +15,7 @@ end)
 ---@param cid number
 ---@return table|nil
 function bridge.getPlayerSkin(cid)
-    return MySQL.query.await("SELECT * FROM playerskins WHERE citizenid = ? AND active = ?", { cid, 1 })
+    return MySQL.scalar.await("SELECT `skin` FROM playerskins WHERE citizenid = ? AND active = ?", { cid, 1 })
 end
 
 ---@param source number|string
