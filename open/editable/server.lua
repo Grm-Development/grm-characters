@@ -6,6 +6,10 @@ function utils.getAppearance(identifier)
     if config.appearance == "bl_appearance" then 
         return exports.bl_appearance:GetPlayerAppearance(identifier)
     elseif bridge.getPlayerSkin then 
-        return bridge.getPlayerSkin(identifier)
+        local appearance = bridge.getPlayerSkin(identifier)
+
+        if type(appearance) == "string" then 
+            return json.decode(appearance)
+        end
     end
 end
