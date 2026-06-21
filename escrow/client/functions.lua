@@ -17,6 +17,10 @@ function sync_configuration(target, data)
     send_react_message("syncConfiguration", { [target] = data })
 end
 
+function get_fallback_skin(gender)
+    return skins.fallback.appearance[gender]
+end
+
 function set_nui_focus(state)
     SetNuiFocus(state, state)
     SetNuiFocusKeepInput(false)
