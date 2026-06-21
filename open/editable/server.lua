@@ -5,7 +5,7 @@
 function utils.getAppearance(identifier)
     if config.appearance == "bl_appearance" then 
         return exports.bl_appearance:GetPlayerAppearance(identifier)
-    elseif config.framework == "qb" then 
+    elseif bridge.getPlayerSkin then 
         return bridge.getPlayerSkin(identifier)
     end
 end
