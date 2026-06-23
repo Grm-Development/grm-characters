@@ -59,7 +59,7 @@ function bridge.getUserCharacters(source, limit)
         MySQL.query.await(FETCH_USER_CHARACTERS, { license_1, license_2, limit }), 
         function(element, index)
             local charinfo = json.decode(element.charinfo)
-
+            
             return {
                 cid = element.cid,
                 identifier = element.citizenid,
