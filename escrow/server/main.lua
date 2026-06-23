@@ -81,7 +81,7 @@ lib.callback.register(
                 characters = not chars and {} or lib.array.map(chars, function(char)
                     return {
                         disabled = char.disabled,
-                        cid = char.cid,
+                        cid = char.cid or (char.identifier:find("char:") and tonumber(char.identifier:match("char:(%d+)"))),
                         identifier = char.identifier,
                         status = "created",
                         skin = utils.getAppearance(char.identifier) or json.decode(char.skin or "[]"),
