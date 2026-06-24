@@ -1,4 +1,4 @@
--- Last update (20.06.2026)
+-- Last update (24.06.2026)
 
 local scenarios = require 'open.config.multicharacter.scenarios'
 local skins = require 'open.config.multicharacter.skins'
@@ -67,11 +67,19 @@ function switch_cam_to_identity()
     SetCamActiveWithInterp(main.stage.cams.identity, main.stage.cams.multicharacter, 1000, 1, 1)
 end
 
+function convert_coords(coords)
+    return {
+    x = coords.x + 0.00,
+    y = coords.y + 0.00,
+    z = coords.z + 0.00,
+    w = ((coords.w or coords.heading) or 0) + 0.00 }
+end
+
 function set_player_coords(pos)
     RequestCollisionAtCoord(pos.x, pos.y, pos.z)
     while not HasCollisionLoadedAroundEntity(cache.ped) do Wait(0) end
     SetEntityCoordsNoOffset(cache.ped, pos.x, pos.y, pos.z, true, true, false)
-    SetEntityHeading(cache.ped, pos.w or pos.heading)
+    SetEntityHeading(cache.ped, pos.heading or pos.w)
 end
 
 function set_freemode_model()
@@ -209,8 +217,8 @@ function player_loaded_init(data)
     if settings.gtaoTransitions then 
         switch_to_part("first")
     end
-    
-    set_player_coords(data.coords)
+
+    set_player_coords(convert_coords(data.coords))
     TriggerServerEvent("grm-characters:session", false)
     grm_debug("session switch (private => public)")
     ClearTimecycleModifier()
@@ -256,14 +264,15 @@ end
 
 ---@return void
 function start_character_selection()
-    local fetch = lib.callback.await("grm-characters:fetch", false) 
-    local state = (#fetch.characters == 0) and "identity" or "multicharacter"
-    utils.setCurrentActivity(grm_locale(("activity_%s"):format(state)))
+    local data = lib.callback.await("grm-characters:fetch", false) 
+    local target = (#data.characters == 0) and "identity" or "multicharacter"
+    
+    utils.setCurrentActivity(grm_locale(("activity_%s"):format(target)))
 
-    create_camera(state, true)
+    create_camera(target, true)
     RenderScriptCams(true, true, 0, true, false)
 
-    if state == "identity" then 
+    if target == "identity" then 
         set_creation_skin() 
         stage_set_alpha(200)
     end
@@ -272,15 +281,12 @@ function start_character_selection()
     ShutdownLoadingScreen()
     DoScreenFadeIn(1300)
     
-    main.availableSlots = fetch.availableSlots 
-    main.characters = fetch.characters 
+    main.availableSlots = data.availableSlots
+    data.availableSlots = (#data.characters - main.availableSlots)
+    main.characters = data.characters
 
-    sync_configuration(state, {
-        availableSlots = (fetch.availableSlots - #fetch.characters),
-        characters = fetch.characters
-    })
-   
-    set_nui_state(state, true)
+    sync_configuration(target, data)
+    set_nui_state(target, true)
 end
 
 function spawn_vehicle(data)
